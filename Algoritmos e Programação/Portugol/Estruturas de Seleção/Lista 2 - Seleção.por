@@ -1,7 +1,7 @@
 programa{
 	
 	funcao inicio(){
-		ex13()
+		ex12()
 	}
 
 	funcao ex13(){
@@ -311,7 +311,8 @@ programa{
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 1265; 
+ * @POSICAO-CURSOR = 58; 
+ * @DOBRAMENTO-CODIGO = [6, 42, 70, 85, 100, 121, 135, 170, 191, 221, 239, 269, 291];
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
