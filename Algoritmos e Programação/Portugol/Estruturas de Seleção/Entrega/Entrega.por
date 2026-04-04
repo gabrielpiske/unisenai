@@ -1,7 +1,7 @@
 programa{
 	
 	funcao inicio(){
-		ex2()
+		ex10()
 	}
 
 	funcao ex1(){
@@ -134,17 +134,114 @@ programa{
 		//identificar qual dos números é o maior e qual é o menor. O programa deve exibir os dois 
 		//números com a mensagem "São múltiplos" ou "Não são múltiplos".
 
-		
+		inteiro num1, num2
+
+		escreva("Insira o primeiro valor: ")
+		leia(num1)
+		escreva("Insira o segundo valor: ")
+		leia(num2)
+
+		se(num1 > num2){
+			escreva("O primeiro valor é maior!: ", num1, "\n")
+		} senao {
+			escreva("O segundo valor é maior!: ", num2, "\n")
+		}
+
+		se(num1 % num2 == 0){
+			escreva("Os números: ", num1, " e ", num2, " são múltiplos!")
+		} senao {
+			escreva("Os números: ", num1, " e ", num2, " não são múltiplos!")
+		}
+	}
+
+	funcao ex8(){
+		//Escreva um programa que calcule a média aritmética das três notas de um aluno. 
+		//Além do valor da média, o programa deve exibir uma das seguintes mensagens: 
+			//• "Aprovado", se a média for igual ou superior a 6.  
+			//• "Em prova final", se a média for inferior a 6, mas igual ou superior a 3.  
+			//• "Reprovado", para as demais situações.
+
+		real nota1, nota2, nota3, media
+		const inteiro QUANTIDADE_NOTAS = 3
+
+		escreva("Entre com a primeira nota: ")
+		leia(nota1)
+		escreva("Entre com a segunda nota: ")
+		leia(nota2)
+		escreva("Entre com a terceira nota: ")
+		leia(nota3)
+
+		media = (nota1 + nota2 + nota3) / QUANTIDADE_NOTAS
+
+		se(media >= 6){
+			escreva("Aprovado com a média: ", media)
+		} senao se(media < 6 e media >= 3){
+			escreva("Em prova final com a média: ", media)
+		} senao {
+			escreva("Reprovado com a média: ", media)
+		}
+	}
+
+	funcao ex9(){
+		//Dados três valores X, Y e Z, elabore um programa em Portugol para verificar se eles 
+		//podem formar os lados de um triângulo.  
+			//• Condição de existência: O comprimento de cada lado de um triângulo deve 
+			//ser menor que a soma dos comprimentos dos outros dois lados.  
+			//• Se for possível formar um triângulo, o programa deverá classificá-lo como: 
+				//o Equilátero: Os três lados possuem comprimentos iguais. 
+				//o Isósceles: Dois dos lados possuem comprimentos iguais.  
+				//o Escaleno: Os três lados possuem comprimentos diferentes. 
+			//• Caso os valores não possam formar um triângulo, o programa deve exibir uma 
+			//mensagem informando o motivo.
+
+		inteiro x, y, z
+
+		escreva("Entre com o primeiro lado do triângulo: ")
+		leia(x)
+		escreva("Entre com o segundo lado do triângulo: ")
+		leia(y)
+		escreva("Entre com o terceiro lado do triângulo: ")
+		leia(z)
+
+		se(x < y + z e y < z + x e z < x + y){
+			se(x == y e y == z){
+				escreva("Triângulo Equilátero")
+			} senao se(x == y ou x == z ou y == z){
+				escreva("Triângulo Isósceles")
+			} senao {
+				escreva("Triângulo Escaleno")
+			}
+		} senao{
+			escreva("Não é possível formar um triângulo, pois um dos lados é maior ou igual à soma dos outros dois.")
+		}
+	}
+
+	funcao ex10(){
+		//Desenvolva um programa em Portugol que receba do usuário a coluna e a linha 
+		//(valores de 1 a 8) de uma casa em um tabuleiro de xadrez. O programa deve então 
+		//determinar e exibir se a casa correspondente é branca ou preta. Por exemplo, a coluna 
+		//5 e linha 3 corresponde a uma casa preta.
+
+		inteiro coluna, linha
+
+		escreva("Insira o número da coluna (1 a 8): ")
+		leia(coluna)
+		escreva("Insira o número da linha (1 a 8): ")
+		leia(linha)
+
+		se((linha & 1) == 0 e (coluna & 1) == 0 ou (linha & 1) == 1 e (coluna & 1) == 1){
+			escreva("É uma casa preta")
+		} senao {
+			escreva("É uma casa branca")
+		}
 	}
 }
-
 /* $$$ Portugol Studio $$$ 
  * 
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 4184; 
- * @DOBRAMENTO-CODIGO = [6, 23, 44, 62, 80, 97];
+ * @POSICAO-CURSOR = 3860; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
