@@ -11,7 +11,7 @@ programa{
 
 		inteiro qtd = 0, soma = 0, numero = 0
 
-		escreva("Quantos numeros deseja somar:")
+		escreva("Quantos numeros deseja somar: ")
 		leia(qtd)
 
 		enquanto(qtd > 0){
@@ -103,7 +103,7 @@ programa{
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 912; 
+ * @POSICAO-CURSOR = 368; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
