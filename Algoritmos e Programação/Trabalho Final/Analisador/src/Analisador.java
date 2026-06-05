@@ -4,7 +4,7 @@ public class Analisador {
     public static void main(String[] args) {
         Scanner read = new Scanner(System.in);
 
-        int MAXIMO_ELEMENTOS = 100;
+        int MAXIMO_ELEMENTOS = 10 ;
         int[] numeros = new int[MAXIMO_ELEMENTOS];
         int totalNumeros = 0;
 
@@ -41,7 +41,20 @@ public class Analisador {
         System.out.println("             RELATÓRIO FINAL                  ");
         System.out.println("==============================================");
 
-        
+        System.out.println("Lista Completa: [");
+        double soma = 0;
+        int maior = numeros[0];
+        int menor = numeros[0];
+
+        for (int i = 0; i < totalNumeros; i++) {
+            System.out.println(numeros[i] + (i == totalNumeros - 1 ? "" : ", "));
+            soma += numeros[i];
+
+            if (numeros[i] > maior) maior = numeros[i];
+            if (numeros[i] < menor) menor = numeros[i];
+        }
+        System.out.println("]");
+        System.out.println("Quantidade total de númeroa informados: " + totalNumeros);
     }
 
     private static void analisarNumeroIndividual(int num) {
@@ -54,7 +67,7 @@ public class Analisador {
             analisePrimo = "É primo";
         } else {
             analisePrimo = "Não é primo (Divisores: ";
-            for (int i = 0; i <= num; i++) {
+            for (int i = 1; i <= num; i++) {
                 if (num % i == 0) {
                     analisePrimo += i + (i == num ? "" : ", ");
                 }
