@@ -41,13 +41,13 @@ public class Analisador {
         System.out.println("             RELATÓRIO FINAL                  ");
         System.out.println("==============================================");
 
-        System.out.println("Lista Completa: [");
+        System.out.print("Lista Completa: [");
         double soma = 0;
         int maior = numeros[0];
         int menor = numeros[0];
 
         for (int i = 0; i < totalNumeros; i++) {
-            System.out.println(numeros[i] + (i == totalNumeros - 1 ? "" : ", "));
+            System.out.print(numeros[i] + (i == totalNumeros - 1 ? "" : ", "));
             soma += numeros[i];
 
             if (numeros[i] > maior) maior = numeros[i];
@@ -127,6 +127,31 @@ public class Analisador {
             }
         }
         System.out.println("\nQuantidade de aparições: " + maxFrequencia);
+
+        System.out.println("\n--- Análise de Posição (Mediana) ---");
+        if (totalNumeros % 2 != 0) {
+            int posCentral = totalNumeros / 2;
+            System.out.println("Valor central (Posição " + (posCentral + 1) + "): " + numeros[posCentral]);
+        } else {
+            int posCentral1 = (totalNumeros / 2) - 1;
+            int posCentral2 = totalNumeros / 2;
+            double mediaCentral = (numeros[posCentral1] + numeros[posCentral2]) / 2.0;
+            System.out.println("Valores centrais (Posições " + (posCentral1 + 1) + " e " + (posCentral2 + 1) + "): "
+                    + numeros[posCentral1] + " e " + numeros[posCentral2]);
+            System.out.printf("Média dos valores centrais: %.1f\n", mediaCentral);
+        }
+
+        System.out.println("\n--- Cálculo Avançado ---");
+        if (menor <= 20) {
+            long fatorial = calcularFatorial(menor);
+            System.out.println("O fatorial do menor número (" + menor + ") é: " + fatorial);
+        } else {
+            System.out.println("Cálculo de fatorial não realizado para o menor número (" + menor +
+                    ") pois é maior que 20 (risco de estouro de capacidade).");
+        }
+
+        System.out.println("==============================================");
+        read.close();
         
     }
 
