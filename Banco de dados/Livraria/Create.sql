@@ -65,4 +65,9 @@ DELETE FROM Livros WHERE ID = 1;
 SELECT * FROM  Livros WHERE Preco > (SELECT AVG(Preco) FROM Livros);
 
 #Atualizar preços em Massa
+UPDATE Livros SET Preco = Preco * 1.10; # desta forma da erro por verificação de segurança
+
+#Dessa forma funciona
+SET SQL_SAFE_UPDATES = 0;
 UPDATE Livros SET Preco = Preco * 1.10;
+SET SQL_SAFE_UPDATES = 1;
