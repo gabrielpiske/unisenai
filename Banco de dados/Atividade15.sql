@@ -192,3 +192,5 @@ SELECT * FROM produtos WHERE nome LIKE 'M%';
 SELECT nome, preco FROM produtos
 ORDER BY preco DESC
 LIMIT 5;
+
+SELECT * FROM produtos ORDER BY preco;
