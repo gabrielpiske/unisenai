@@ -145,3 +145,82 @@ INSERT INTO pet (id_pet, nome, especie, raca, data_nascimento, sexo, id_tutor, i
 (59, 'Maya', 'Cao', 'Beagle', '2015-01-20', 'M', 29, 19),
 (60, 'Bob', 'Gato', 'Maine Coon', '2015-11-09', 'F', 30, 20);
 
+-- 1. Mostre todos os registros da tabela tutor.
+SELECT * FROM tutor;
+
+-- 2. Mostre somente o nome e a cidade de todos os tutores.
+SELECT nome, cidade FROM tutor;
+
+-- 3. Mostre todos os pets cuja especie seja Cao.
+SELECT * FROM pet
+WHERE especie = 'Cao';
+
+-- 4. Mostre todos os pets cuja especie seja Gato.
+SELECT * FROM pet
+WHERE especie = 'Gato';
+
+-- 5. Mostre os tutores que moram em Blumenau.
+SELECT * FROM tutor
+WHERE cidade = 'Blumenau';
+
+-- 6. Mostre os veterinarios cuja especialidade seja Clinica Geral.
+SELECT * FROM veterinario
+WHERE especialidade = 'Clinica Geral';
+
+-- 7. Mostre os pets cujo nome comece com a letra M.
+SELECT * FROM pet
+WHERE nome LIKE 'M%';
+
+-- 8. Mostre os pets que nasceram entre 01/01/2018 e 31/12/2022.
+SELECT * FROM pet
+WHERE data_nascimento BETWEEN '2018-01-01' AND '2022-12-31';
+
+-- 9. Mostre todos os tutores ordenados pelo nome em ordem alfabetica.
+SELECT * FROM tutor
+ORDER BY nome ASC;
+
+-- 10. Descubra quantos pets estao cadastrados.
+SELECT COUNT(*) AS quantidade_pets
+FROM pet;
+
+-- 11. Mostre somente o nome, a especie e a raca dos pets.
+SELECT nome, especie, raca
+FROM pet;
+
+-- 12. Mostre os pets cujo sexo seja F.
+SELECT * FROM pet
+WHERE sexo = 'F';
+
+-- 13. Mostre os veterinarios ordenados pelo nome em ordem alfabetica.
+SELECT * FROM veterinario
+ORDER BY nome ASC;
+
+-- 14. Mostre os tutores cujo nome comece com a letra A.
+SELECT * FROM tutor
+WHERE nome LIKE 'A%';
+
+-- 15. Descubra quantos tutores estao cadastrados.
+SELECT COUNT(*) AS quantidade_tutores
+FROM tutor;
+
+-- 16. Descubra quantos veterinarios estao cadastrados.
+SELECT COUNT(*) AS quantidade_veterinarios
+FROM veterinario;
+
+-- 17. Mostre os 10 primeiros registros da tabela pet.
+SELECT * FROM pet
+LIMIT 10;
+
+-- 18. Mostre os 5 pets mais novos cadastrados.
+SELECT * FROM pet
+ORDER BY data_nascimento DESC
+LIMIT 5;
+
+-- 19. Mostre os 5 pets mais velhos cadastrados.
+SELECT * FROM pet
+ORDER BY data_nascimento ASC
+LIMIT 5;
+
+-- 20. Mostre os veterinarios cuja especialidade seja Cirurgia.
+SELECT * FROM veterinario
+WHERE especialidade = 'Cirurgia';
