@@ -263,3 +263,82 @@ INSERT INTO devolucao (id_devolucao,id_emprestimo,data_devolucao,condicao_epi,id
 (38,38,'2026-06-11','Bom',4,'Devolucao registrada'),
 (39,39,'2026-06-16','Danificado',2,'Devolucao registrada'),
 (40,40,'2026-06-21','Bom',5,'Devolucao registrada');
+
+
+-- Os comandos não são fornecidos nesta parte. Elabore, execute e apresente um print do comando e do resultado.
+-- 1.	Mostre todos os registros da tabela setor.
+SELECT * FROM setor;
+
+-- 2.	Mostre matrícula, nome e cargo de todos os colaboradores.
+SELECT matricula, nome, cargo
+FROM colaborador;
+
+-- 3.	Mostre os colaboradores cuja situação seja Ativo.
+SELECT * FROM colaborador
+WHERE situacao = 'Ativo';
+
+-- 4.	Mostre os colaboradores cujo nome comece com a letra A.
+SELECT * FROM colaborador
+WHERE nome LIKE 'A%';
+
+-- 5.	Mostre todos os EPIs cadastrados.
+SELECT * FROM epi;
+
+-- 6.	Mostre nome, CA e validade do CA de todos os EPIs.
+SELECT ca, validade_ca
+FROM epi;
+
+-- 7.	Mostre os EPIs com valor unitário maior que R$ 100,00.
+SELECT * FROM epi
+WHERE valor_unitario > 100;
+
+-- 8.	Mostre os EPIs cuja quantidade em estoque seja menor que 25.
+SELECT * FROM epi
+WHERE quantidade_estoque < 25;
+
+-- 9.	Mostre os EPIs ordenados pelo valor unitário do maior para o menor.
+SELECT * FROM epi
+ORDER BY valor_unitario DESC;
+
+-- 10.	Mostre os 5 EPIs de maior valor unitário.
+SELECT * FROM epi
+ORDER BY valor_unitario DESC LIMIT 5;
+
+-- 11.	Descubra quantos colaboradores estão cadastrados.
+SELECT COUNT(*) FROM colaborador;
+
+-- 12.	Descubra quantos EPIs estão cadastrados.
+SELECT COUNT(*) FROM epi;
+
+-- 13.	Mostre todos os usuários do sistema ordenados pelo nome.
+SELECT * FROM usuario
+ORDER BY nome ASC;
+
+-- 14.	Mostre os usuários cujo perfil seja Seguranca.
+SELECT * FROM usuario
+WHERE perfil = 'Seguranca';
+
+-- 15.	Mostre todos os empréstimos cujo status seja EMPRESTADO.
+SELECT * FROM emprestimo
+WHERE status = 'Emprestado';
+
+-- 16.	Mostre todos os empréstimos cujo status seja DEVOLVIDO.
+SELECT * FROM emprestimo
+WHERE status = 'Devolvido';
+
+-- 17.	Mostre os empréstimos realizados entre 01/03/2026 e 30/06/2026.
+SELECT * FROM emprestimo
+WHERE data_emprestimo BETWEEN '2026-03-01' AND '2026-06-30';
+
+-- 18.	Mostre os empréstimos com quantidade maior que 1.
+SELECT * FROM emprestimo
+WHERE quantidade > 1;
+
+-- 19.	Mostre todas as devoluções em que a condição do EPI seja Danificado.
+SELECT * FROM devolucao
+WHERE condicao_epi = 'DANIFICADO';
+
+-- 20.	Mostre as 10 devoluções mais recentes, ordenadas pela data de devolução.
+SELECT * FROM devolucao
+ORDER BY data_devolucao ASC
+LIMIT 10;
