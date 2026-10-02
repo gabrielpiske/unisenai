@@ -342,3 +342,153 @@ WHERE condicao_epi = 'DANIFICADO';
 SELECT * FROM devolucao
 ORDER BY data_devolucao ASC
 LIMIT 10;
+
+SELECT colaborador.matricula, colaborador.nome,        setor.nome AS setor FROM colaborador
+INNER JOIN setor ON colaborador.id_setor = setor.id_setor
+ORDER BY colaborador.nome;
+
+SELECT epi.nome AS epi, epi.ca,        categoria_epi.nome AS categoria FROM epi
+INNER JOIN categoria_epi
+ON epi.id_categoria = categoria_epi.id_categoria
+ORDER BY epi.nome;
+
+SELECT emprestimo.id_emprestimo, colaborador.nome AS colaborador,        emprestimo.data_emprestimo, emprestimo.status FROM emprestimo
+INNER JOIN colaborador
+ON emprestimo.id_colaborador = colaborador.id_colaborador;
+
+SELECT emprestimo.id_emprestimo, epi.nome AS epi,        emprestimo.quantidade, emprestimo.data_emprestimo FROM emprestimo
+INNER JOIN epi ON emprestimo.id_epi = epi.id_epi;
+
+SELECT emprestimo.id_emprestimo, usuario.nome AS usuario,        usuario.perfil, emprestimo.data_emprestimo FROM emprestimo
+INNER JOIN usuario ON emprestimo.id_usuario = usuario.id_usuario;
+
+SELECT colaborador.nome AS colaborador, epi.nome AS epi,        emprestimo.data_emprestimo, emprestimo.quantidade,        emprestimo.status FROM emprestimo
+INNER JOIN colaborador ON emprestimo.id_colaborador = colaborador.id_colaborador
+INNER JOIN epi ON emprestimo.id_epi = epi.id_epi;
+
+SELECT colaborador.matricula, colaborador.nome AS colaborador,        epi.nome AS epi, emprestimo.data_emprestimo,        emprestimo.quantidade FROM emprestimo
+INNER JOIN colaborador ON emprestimo.id_colaborador = colaborador.id_colaborador
+INNER JOIN epi ON emprestimo.id_epi = epi.id_epi
+WHERE emprestimo.status = 'EMPRESTADO'
+ORDER BY colaborador.nome;
+
+SELECT colaborador.nome AS colaborador, epi.nome AS epi,        categoria_epi.nome AS categoria, emprestimo.data_emprestimo FROM emprestimo
+INNER JOIN colaborador ON emprestimo.id_colaborador = colaborador.id_colaborador
+INNER JOIN epi ON emprestimo.id_epi = epi.id_epi INNER JOIN categoria_epi ON epi.id_categoria = categoria_epi.id_categoria
+WHERE emprestimo.status = 'EMPRESTADO';
+
+SELECT colaborador.nome AS colaborador, setor.nome AS setor,        epi.nome AS epi, emprestimo.data_emprestimo, emprestimo.status FROM emprestimo INNER JOIN colaborador ON emprestimo.id_colaborador = colaborador.id_colaborador
+INNER JOIN setor ON colaborador.id_setor = setor.id_setor
+INNER JOIN epi ON emprestimo.id_epi = epi.id_epi;
+
+SELECT colaborador.nome AS colaborador, epi.nome AS epi,        usuario.nome AS responsavel, emprestimo.data_emprestimo,        emprestimo.status FROM emprestimo
+INNER JOIN colaborador ON emprestimo.id_colaborador = colaborador.id_colaborador
+INNER JOIN epi ON emprestimo.id_epi = epi.id_epi
+INNER JOIN usuario ON emprestimo.id_usuario = usuario.id_usuario;
+
+SELECT colaborador.nome AS colaborador, setor.nome AS setor,        epi.nome AS epi, emprestimo.data_emprestimo FROM emprestimo
+INNER JOIN colaborador ON emprestimo.id_colaborador = colaborador.id_colaborador
+INNER JOIN setor ON colaborador.id_setor = setor.id_setor
+INNER JOIN epi ON emprestimo.id_epi = epi.id_epi
+WHERE setor.nome = 'Obras' AND emprestimo.status = 'EMPRESTADO';
+
+SELECT colaborador.nome AS colaborador, epi.nome AS epi,        categoria_epi.nome AS categoria, emprestimo.data_emprestimo,        emprestimo.status FROM emprestimo
+INNER JOIN colaborador ON emprestimo.id_colaborador = colaborador.id_colaborador
+INNER JOIN epi ON emprestimo.id_epi = epi.id_epi
+INNER JOIN categoria_epi ON epi.id_categoria = categoria_epi.id_categoria
+WHERE categoria_epi.nome = 'Protecao contra Quedas';
+
+SELECT colaborador.nome AS colaborador, epi.nome AS epi,        emprestimo.data_emprestimo, devolucao.data_devolucao,        devolucao.condicao_epi FROM devolucao
+INNER JOIN emprestimo ON devolucao.id_emprestimo = emprestimo.id_emprestimo
+INNER JOIN colaborador ON emprestimo.id_colaborador = colaborador.id_colaborador
+INNER JOIN epi ON emprestimo.id_epi = epi.id_epi
+ORDER BY devolucao.data_devolucao;
+
+SELECT colaborador.nome AS colaborador, epi.nome AS epi,        devolucao.data_devolucao, devolucao.condicao_epi,        usuario.nome AS responsavel_devolucao FROM devolucao
+INNER JOIN emprestimo ON devolucao.id_emprestimo = emprestimo.id_emprestimo
+INNER JOIN colaborador ON emprestimo.id_colaborador = colaborador.id_colaborador
+INNER JOIN epi ON emprestimo.id_epi = epi.id_epi
+INNER JOIN usuario ON devolucao.id_usuario = usuario.id_usuario;
+
+SELECT colaborador.matricula, colaborador.nome AS colaborador,        setor.nome AS setor, epi.nome AS epi,        categoria_epi.nome AS categoria, emprestimo.data_emprestimo,        usuario.nome AS responsavel_entrega FROM emprestimo
+INNER JOIN colaborador ON emprestimo.id_colaborador = colaborador.id_colaborador
+INNER JOIN setor ON colaborador.id_setor = setor.id_setor
+INNER JOIN epi ON emprestimo.id_epi = epi.id_epi
+INNER JOIN categoria_epi ON epi.id_categoria = categoria_epi.id_categoria
+INNER JOIN usuario ON emprestimo.id_usuario = usuario.id_usuario
+WHERE emprestimo.status = 'EMPRESTADO'
+ORDER BY setor.nome, colaborador.nome;
+
+SELECT colaborador.nome AS colaborador, setor.nome AS setor,        epi.nome AS epi, categoria_epi.nome AS categoria,        devolucao.data_devolucao, devolucao.condicao_epi,        usuario.nome AS responsavel_devolucao FROM devolucao
+INNER JOIN emprestimo ON devolucao.id_emprestimo = emprestimo.id_emprestimo
+INNER JOIN colaborador ON emprestimo.id_colaborador = colaborador.id_colaborador
+INNER JOIN setor ON colaborador.id_setor = setor.id_setor
+INNER JOIN epi ON emprestimo.id_epi = epi.id_epi INNER JOIN categoria_epi ON epi.id_categoria = categoria_epi.id_categoria INNER JOIN usuario ON devolucao.id_usuario = usuario.id_usuario
+ORDER BY devolucao.data_devolucao DESC;
+
+SELECT DISTINCT status FROM emprestimo;
+SELECT
+    c.matricula,
+    c.nome AS colaborador,
+    c.cargo,
+    s.nome AS setor,
+    ep.nome AS epi,
+    cat.nome AS categoria,
+    emp.data_emprestimo,
+    u.nome AS usuario_responsavel_entrega
+FROM emprestimo emp
+JOIN colaborador c ON emp.id_colaborador = c.id_colaborador
+JOIN setor s ON c.id_setor = s.id_setor
+JOIN epi ep ON emp.id_epi = ep.id_epi
+JOIN categoria_epi cat ON ep.id_categoria = cat.id_categoria
+JOIN usuario u ON emp.id_usuario = u.id_usuario
+WHERE emp.status = 'EMPRESTADO';
+
+SELECT
+    c.nome AS colaborador,
+    s.nome AS setor,
+    ep.nome AS epi,
+    cat.nome AS categoria,
+    emp.data_emprestimo,
+    d.data_devolucao,
+    d.condicao_epi,
+    u.nome AS usuario_registro_devolucao
+FROM devolucao d
+JOIN emprestimo emp ON d.id_emprestimo = emp.id_emprestimo
+JOIN colaborador c ON emp.id_colaborador = c.id_colaborador
+JOIN setor s ON c.id_setor = s.id_setor
+JOIN epi ep ON emp.id_epi = ep.id_epi
+JOIN categoria_epi cat ON ep.id_categoria = cat.id_categoria
+JOIN usuario u ON d.id_usuario = u.id_usuario;
+
+SELECT
+    c.nome AS colaborador,
+    s.nome AS setor,
+    ep.nome AS epi,
+    emp.quantidade,
+    emp.data_emprestimo
+FROM emprestimo emp
+JOIN colaborador c ON emp.id_colaborador = c.id_colaborador
+JOIN setor s ON c.id_setor = s.id_setor
+JOIN epi ep ON emp.id_epi = ep.id_epi
+JOIN categoria_epi cat ON ep.id_categoria = cat.id_categoria
+WHERE emp.status = 'EMPRESTADO'
+  AND cat.nome = 'Protecao das Maos';
+
+SELECT
+    c.nome AS colaborador,
+    s.nome AS setor,
+    ep.nome AS epi,
+    cat.nome AS categoria,
+    emp.data_emprestimo,
+    d.data_devolucao,
+    d.condicao_epi,
+    u.nome AS responsavel_devolucao
+FROM devolucao d
+JOIN emprestimo emp ON d.id_emprestimo = emp.id_emprestimo
+JOIN colaborador c ON emp.id_colaborador = c.id_colaborador
+JOIN setor s ON c.id_setor = s.id_setor
+JOIN epi ep ON emp.id_epi = ep.id_epi
+JOIN categoria_epi cat ON ep.id_categoria = cat.id_categoria
+JOIN usuario u ON d.id_usuario = u.id_usuario
+ORDER BY d.data_devolucao DESC;
