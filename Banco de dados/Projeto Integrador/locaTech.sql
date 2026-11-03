@@ -249,3 +249,152 @@ SELECT DATE_FORMAT(data_retirada, '%Y-%m') AS mes_ano,
 FROM locacao
 GROUP BY DATE_FORMAT(data_retirada, '%Y-%m')
 ORDER BY mes_ano ASC;
+
+-- Relatório 1
+SELECT e.id_equipamento,
+       e.nome_equipamento,
+       c.nome_categoria AS categoria,
+       e.valor_diaria_tabela,
+       e.estoque_total
+FROM equipamento e
+INNER JOIN categoria c ON c.id_categoria = e.id_categoria
+ORDER BY c.nome_categoria ASC, e.nome_equipamento ASC;
+
+-- Relatório 2
+SELECT l.id_locacao,
+       c.nome AS cliente,
+       c.telefone,
+       l.data_retirada,
+       l.data_prevista_devolucao,
+       l.situacao
+FROM locacao l
+INNER JOIN cliente c ON c.id_cliente = l.id_cliente
+WHERE l.situacao = 'Aberta'
+ORDER BY l.data_prevista_devolucao ASC;
+
+-- Relatório 3
+SELECT l.id_locacao,
+       c.nome AS cliente,
+       c.telefone,
+       l.data_retirada,
+       l.data_prevista_devolucao,
+       DATEDIFF('2026-11-30', l.data_prevista_devolucao) AS dias_em_atraso
+FROM locacao l
+INNER JOIN cliente c ON c.id_cliente = l.id_cliente
+WHERE l.situacao = 'Aberta'
+  AND l.data_prevista_devolucao < '2026-11-30'
+ORDER BY dias_em_atraso DESC;
+
+-- Relatório 4
+SELECT c.nome AS cliente,
+       l.id_locacao,
+       e.nome_equipamento AS equipamento,
+       il.quantidade,
+       l.data_retirada,
+       l.situacao
+FROM cliente c
+INNER JOIN locacao l ON l.id_cliente = c.id_cliente
+INNER JOIN item_locacao il ON il.id_locacao = l.id_locacao
+INNER JOIN equipamento e ON e.id_equipamento = il.id_equipamento
+WHERE c.id_cliente = 3
+ORDER BY l.data_retirada DESC, e.nome_equipamento ASC;
+
+-- Relatório 5
+SELECT e.id_equipamento,
+       e.nome_equipamento AS equipamento,
+       il.quantidade AS qtd_comprometida,
+       e.estoque_total,
+       c.nome AS cliente,
+       l.id_locacao,
+       l.data_prevista_devolucao
+FROM item_locacao il
+INNER JOIN locacao l ON l.id_locacao = il.id_locacao
+INNER JOIN equipamento e ON e.id_equipamento = il.id_equipamento
+INNER JOIN cliente c ON c.id_cliente = l.id_cliente
+WHERE l.situacao = 'Aberta'
+ORDER BY e.nome_equipamento ASC, l.data_prevista_devolucao ASC;
+
+-- Relatório 6
+SELECT l.id_locacao,
+       c.nome AS cliente,
+       l.situacao,
+       e.nome_equipamento AS equipamento,
+       il.quantidade,
+       il.valor_diaria_negociado,
+       GREATEST(1, DATEDIFF(COALESCE(l.data_efetiva_devolucao, l.data_prevista_devolucao), l.data_retirada)) AS dias_faturaveis,
+       ROUND(
+           il.quantidade * il.valor_diaria_negociado *
+           GREATEST(1, DATEDIFF(COALESCE(l.data_efetiva_devolucao, l.data_prevista_devolucao), l.data_retirada)),
+           2
+       ) AS subtotal_calculado
+FROM locacao l
+INNER JOIN cliente c ON c.id_cliente = l.id_cliente
+INNER JOIN item_locacao il ON il.id_locacao = l.id_locacao
+INNER JOIN equipamento e ON e.id_equipamento = il.id_equipamento
+WHERE l.situacao <> 'Cancelada'
+ORDER BY l.id_locacao ASC, e.nome_equipamento ASC;
+
+-- Relatório 7
+SELECT c.id_cliente,
+       c.nome AS cliente,
+       COUNT(l.id_locacao) AS total_locacoes_ativas
+FROM cliente c
+LEFT JOIN locacao l
+       ON l.id_cliente = c.id_cliente
+      AND l.situacao <> 'Cancelada'
+GROUP BY c.id_cliente, c.nome
+ORDER BY total_locacoes_ativas DESC, c.nome ASC;
+
+-- Relatório 8
+SELECT c.id_cliente,
+       c.nome AS cliente,
+       COUNT(DISTINCT l.id_locacao) AS qtd_contratos,
+       COALESCE(
+           ROUND(
+               SUM(
+                   il.quantidade * il.valor_diaria_negociado *
+                   GREATEST(1, DATEDIFF(COALESCE(l.data_efetiva_devolucao, l.data_prevista_devolucao), l.data_retirada))
+               ),
+               2
+           ),
+           0.00
+       ) AS faturamento_total_calculado
+FROM cliente c
+LEFT JOIN locacao l
+       ON l.id_cliente = c.id_cliente
+      AND l.situacao <> 'Cancelada'
+LEFT JOIN item_locacao il
+       ON il.id_locacao = l.id_locacao
+GROUP BY c.id_cliente, c.nome
+ORDER BY faturamento_total_calculado DESC, c.nome ASC;
+
+-- Relatório 9
+SELECT e.id_equipamento,
+       e.nome_equipamento AS equipamento,
+       cat.nome_categoria AS categoria,
+       e.estoque_total,
+       COALESCE(SUM(il.quantidade), 0) AS total_unidades_alugadas
+FROM equipamento e
+INNER JOIN categoria cat ON cat.id_categoria = e.id_categoria
+LEFT JOIN item_locacao il ON il.id_equipamento = e.id_equipamento
+LEFT JOIN locacao l
+       ON l.id_locacao = il.id_locacao
+      AND l.situacao <> 'Cancelada'
+GROUP BY e.id_equipamento, e.nome_equipamento, cat.nome_categoria, e.estoque_total
+ORDER BY total_unidades_alugadas DESC, e.nome_equipamento ASC;
+
+-- Relatório 10
+SELECT DATE_FORMAT(l.data_retirada, '%Y-%m') AS mes_referencia,
+       COUNT(DISTINCT l.id_locacao) AS locacoes_validas,
+       ROUND(
+           SUM(
+               il.quantidade * il.valor_diaria_negociado *
+               GREATEST(1, DATEDIFF(COALESCE(l.data_efetiva_devolucao, l.data_prevista_devolucao), l.data_retirada))
+           ),
+           2
+       ) AS faturamento_contratual_mensal
+FROM locacao l
+INNER JOIN item_locacao il ON il.id_locacao = l.id_locacao
+WHERE l.situacao <> 'Cancelada'
+GROUP BY DATE_FORMAT(l.data_retirada, '%Y-%m')
+ORDER BY mes_referencia ASC;
